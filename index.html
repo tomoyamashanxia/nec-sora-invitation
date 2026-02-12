@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AI動画プロンプト | 講師を選んでSoraで生成</title>
+  <meta name="description" content="75名の講師から選んでAI動画プロンプトを作成し、Soraで動画を生成しましょう。">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- ===== Header ===== -->
+    <header class="header">
+      <div class="header__icon">🎬</div>
+      <h1 class="header__title">AI動画プロンプト</h1>
+      <p class="header__subtitle">講師を選んでプロンプトを書いたら<br>Soraで動画を生成しましょう</p>
+      <div class="daily-limit" id="dailyLimit">
+        <span class="daily-limit__icon">📩</span>
+        本日の残り送信回数: <strong id="remainingCount">30</strong> / 30
+      </div>
+    </header>
+
+    <!-- ===== Hidden Formsubmit Form ===== -->
+    <form id="hiddenForm" action="https://formsubmit.co/tomoyamashanxia@gmail.com" method="POST" style="display:none;">
+      <input type="hidden" name="_subject" value="🎬 AI動画プロンプト依頼">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://sora.chatgpt.com/invite?code=GFMNHS">
+      <input type="hidden" name="_template" value="table">
+      <textarea name="プロンプト" id="formMessage" style="display:none;"></textarea>
+    </form>
+
+    <!-- ===== Step 1: Nickname ===== -->
+    <section class="section-card" id="nicknameSection">
+      <div class="section-card__header">
+        <span class="section-card__step">1</span>
+        <h2 class="section-card__title">ニックネームを入力</h2>
+      </div>
+      <div class="prompt-section">
+        <label class="prompt-label" for="inputNickname">
+          <span class="prompt-label__emoji">✏️</span> あなたのニックネーム
+        </label>
+        <input type="text" class="prompt-input" id="inputNickname" placeholder="例: taro" maxlength="20"
+          autocomplete="off" inputmode="latin">
+        <p class="input-hint" id="nicknameHint">半角英字のみ・20文字以内</p>
+      </div>
+    </section>
+
+    <!-- ===== Step 2: Instructor Selection ===== -->
+    <section class="section-card" id="instructorSection">
+      <div class="section-card__header">
+        <span class="section-card__step">2</span>
+        <h2 class="section-card__title">講師を選ぶ</h2>
+      </div>
+
+      <!-- Search -->
+      <div class="search-box">
+        <span class="search-box__icon">🔍</span>
+        <input type="text" class="search-box__input" id="searchInput" placeholder="名前で検索...">
+      </div>
+
+      <!-- Selected Display -->
+      <div class="selected-display" id="selectedDisplay">
+        <img class="selected-display__avatar" id="selectedAvatar" src="" alt="">
+        <div class="selected-display__info">
+          <div class="selected-display__label">選択中</div>
+          <div class="selected-display__name" id="selectedName"></div>
+        </div>
+        <button class="selected-display__clear" id="clearSelection" aria-label="選択解除">✕</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="instructor-grid" id="instructorGrid"></div>
+    </section>
+
+    <!-- ===== Step 3: Prompt Input ===== -->
+    <section class="section-card" id="promptSection">
+      <div class="section-card__header">
+        <span class="section-card__step">3</span>
+        <h2 class="section-card__title">プロンプトを書く</h2>
+      </div>
+
+      <div class="prompt-section">
+        <label class="prompt-label" for="inputPlace">
+          <span class="prompt-label__emoji">📍</span> 場所
+        </label>
+        <input type="text" class="prompt-input" id="inputPlace" placeholder="日本の田舎の公園">
+      </div>
+
+      <div class="prompt-section">
+        <label class="prompt-label" for="inputState">
+          <span class="prompt-label__emoji">👗</span> 状態
+        </label>
+        <input type="text" class="prompt-input" id="inputState" placeholder="タンクトップとデニム">
+      </div>
+
+      <div class="prompt-section">
+        <label class="prompt-label" for="inputTime">
+          <span class="prompt-label__emoji">🕐</span> 時
+        </label>
+        <input type="text" class="prompt-input" id="inputTime" placeholder="真夏の午後">
+      </div>
+
+      <div class="prompt-section">
+        <label class="prompt-label" for="inputAction">
+          <span class="prompt-label__emoji">🎬</span> 何をしている
+        </label>
+        <textarea class="prompt-input" id="inputAction" rows="3"
+          placeholder="ベンチに座ってアイスクリームを食べながら英単語の勉強をしている"></textarea>
+      </div>
+    </section>
+
+    <!-- ===== Submit ===== -->
+    <div class="submit-section">
+      <button class="submit-btn" id="submitBtn" disabled>
+        <span class="submit-btn__icon">🚀</span>
+        <span id="submitBtnText">送信してSoraにサインアップ</span>
+      </button>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+      <p>Powered by Sora</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
