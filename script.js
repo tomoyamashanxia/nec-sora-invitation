@@ -32,6 +32,41 @@
     return v.length > 0 && v.length <= 20 && NICKNAME_REGEX.test(v);
   }
 
+  // ===== Banned Words Filter =====
+  const BANNED_WORDS = [
+    // 暴力系
+    '殺す', '殺し', '殺した', '殺して', '殺され', '殺人',
+    '死ぬ', '死ね', '死んで', '死体',
+    '殴る', '殴って', '殴り',
+    '刺す', '刺し', '刺して',
+    '撃つ', '撃って', '撃ち',
+    '爆破', '爆弾', 'テロ', '拳銃', 'ナイフ', '包丁で刺',
+    '血まみれ', '戦争', '武器', '拷問', '拷問する',
+    '首を絞め', '絞殺', '斬る', '斬首', '視殺',
+    '自殺', '自傷',
+    // 卑猥系
+    '裸', '全裸', 'ヌード', '脱ぐ', '脱いで', '脱がして',
+    'セックス', 'エッチ', 'エロ', 'アダルト',
+    '下着', 'パンツ', 'ブラジャー',
+    '胸を見せ', '胸を出', 'おっぱい', 'ちんちん',
+    'キス', '抱きつ', '抱き合',
+    '婲婆', '風俗', 'ソープ', 'デリヘル',
+    'レイプ', '痴漢', '変態', 'フェチ',
+    '淫ら', '卸な',
+    'ビキニ', '水着を脱',
+    'ポルノ', 'AV', 'オナニー',
+    // 差別・ハラスメント系
+    '死ね', '消えろ', 'クソ', 'バカ', 'アホ',
+    'キモい', 'キモい', '気持ち悪い',
+    'ゴミ', 'カス', 'クズ',
+    '下品', '坂足', '下げす',
+  ];
+
+  function containsBannedWord(text) {
+    const lower = text.toLowerCase();
+    return BANNED_WORDS.find(word => lower.includes(word.toLowerCase())) || null;
+  }
+
   // ===== DOM Elements =====
   const grid = document.getElementById('instructorGrid');
   const searchInput = document.getElementById('searchInput');
@@ -228,6 +263,14 @@
     const hasAnyText = inputPlace.value.trim() || inputState.value.trim() || inputTime.value.trim() || inputAction.value.trim();
     if (!hasAnyText) {
       showToast('プロンプトを入力してください', 'error');
+      return;
+    }
+
+    // Check banned words in 何をしている
+    const bannedWord = containsBannedWord(inputAction.value);
+    if (bannedWord) {
+      showToast(`「${bannedWord}」は使用できません。内容を修正してください`, 'error');
+      inputAction.focus();
       return;
     }
 
