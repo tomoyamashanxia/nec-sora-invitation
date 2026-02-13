@@ -78,10 +78,14 @@
   const submitBtnText = document.getElementById('submitBtnText');
   const inputNickname = document.getElementById('inputNickname');
   const nicknameHint = document.getElementById('nicknameHint');
-  const inputPlace = document.getElementById('inputPlace');
-  const inputState = document.getElementById('inputState');
-  const inputTime = document.getElementById('inputTime');
-  const inputAction = document.getElementById('inputAction');
+
+  // Radio groups & custom inputs
+  const radioGroups = {
+    place: { group: document.getElementById('groupPlace'), custom: document.getElementById('customPlace') },
+    state: { group: document.getElementById('groupState'), custom: document.getElementById('customState') },
+    time: { group: document.getElementById('groupTime'), custom: document.getElementById('customTime') },
+    action: { group: document.getElementById('groupAction'), custom: document.getElementById('customAction') },
+  };
 
   // Hidden form (Formsubmit.co)
   const formMessage = document.getElementById('formMessage');
@@ -94,6 +98,35 @@
   const STORAGE_KEY = 'ai_prompt_daily';
 
   let currentInstructor = null;
+
+  // ===== Radio Group Helpers =====
+  function getFieldValue(key) {
+    const { group, custom } = radioGroups[key];
+    const checked = group.querySelector('input[type="radio"]:checked');
+    if (!checked) return '';
+    if (checked.value === '__custom__') return custom.value.trim();
+    return checked.value;
+  }
+
+  function setupRadioGroup(key) {
+    const { group, custom } = radioGroups[key];
+    group.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === '__custom__') {
+          custom.classList.remove('hidden');
+          custom.focus();
+        } else {
+          custom.classList.add('hidden');
+          custom.value = '';
+        }
+        // Mark selected style
+        group.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
+        radio.closest('.radio-option').classList.add('selected');
+        updateSubmitState();
+      });
+    });
+    custom.addEventListener('input', updateSubmitState);
+  }
 
   // ===== Build Instructor Grid =====
   function buildGrid() {
@@ -233,7 +266,7 @@
   function updateSubmitState() {
     const hasNickname = isValidNickname(inputNickname.value);
     const hasInstructor = !!currentInstructor;
-    const hasAnyText = inputPlace.value.trim() || inputState.value.trim() || inputTime.value.trim() || inputAction.value.trim();
+    const hasAnyText = getFieldValue('place') || getFieldValue('state') || getFieldValue('time') || getFieldValue('action');
     const hasRemaining = getRemaining() > 0;
     submitBtn.disabled = !(hasNickname && hasInstructor && hasAnyText && hasRemaining);
   }
@@ -260,17 +293,21 @@
       return;
     }
 
-    const hasAnyText = inputPlace.value.trim() || inputState.value.trim() || inputTime.value.trim() || inputAction.value.trim();
+    const placeVal = getFieldValue('place');
+    const stateVal = getFieldValue('state');
+    const timeVal = getFieldValue('time');
+    const actionVal = getFieldValue('action');
+
+    const hasAnyText = placeVal || stateVal || timeVal || actionVal;
     if (!hasAnyText) {
       showToast('プロンプトを入力してください', 'error');
       return;
     }
 
-    // Check banned words in 何をしている
-    const bannedWord = containsBannedWord(inputAction.value);
+    // Check banned words in action custom field
+    const bannedWord = containsBannedWord(actionVal);
     if (bannedWord) {
       showToast(`「${bannedWord}」は使用できません。内容を修正してください`, 'error');
-      inputAction.focus();
       return;
     }
 
@@ -278,10 +315,10 @@
     const lines = [];
     lines.push(`動画内で『${inputNickname.value.trim()}さん』と呼びかける。`);
     lines.push(`冒頭で『こんにちは、${currentInstructor}です。』と笑顔で挨拶する。`);
-    if (inputPlace.value.trim()) lines.push(`場所: ${inputPlace.value.trim()}`);
-    if (inputState.value.trim()) lines.push(`状態: ${inputState.value.trim()}`);
-    if (inputTime.value.trim()) lines.push(`時: ${inputTime.value.trim()}`);
-    if (inputAction.value.trim()) lines.push(`何をしている: ${inputAction.value.trim()}`);
+    if (placeVal) lines.push(`場所: ${placeVal}`);
+    if (stateVal) lines.push(`状態: ${stateVal}`);
+    if (timeVal) lines.push(`時: ${timeVal}`);
+    if (actionVal) lines.push(`何をしている: ${actionVal}`);
 
     // Show loading
     submitBtn.disabled = true;
@@ -342,12 +379,13 @@
   searchInput.addEventListener('input', e => filterInstructors(e.target.value));
   clearBtn.addEventListener('click', clearSelection);
   submitBtn.addEventListener('click', handleSubmit);
-  [inputPlace, inputState, inputTime, inputAction].forEach(el => {
-    el.addEventListener('input', updateSubmitState);
-  });
+
+  // Setup radio groups
+  Object.keys(radioGroups).forEach(setupRadioGroup);
 
   // ===== Init =====
   buildGrid();
   updateLimitUI();
   updateSubmitState();
 })();
+

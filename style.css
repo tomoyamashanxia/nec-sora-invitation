@@ -444,6 +444,92 @@ textarea.prompt-input {
   min-height: 80px;
 }
 
+/* ---------- Radio Group (Selection UI) ---------- */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio-option:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.radio-option:active {
+  transform: scale(0.98);
+}
+
+.radio-option.selected {
+  background: rgba(124, 92, 252, 0.1);
+  border-color: rgba(124, 92, 252, 0.4);
+  box-shadow: 0 0 12px rgba(124, 92, 252, 0.1);
+}
+
+.radio-option input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--text-muted);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.radio-option input[type="radio"]:checked {
+  border-color: var(--accent-2);
+  background: transparent;
+}
+
+.radio-option input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-2);
+}
+
+.radio-option__label {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.radio-option.selected .radio-option__label {
+  color: var(--accent-2);
+  font-weight: 500;
+}
+
+/* Custom input (shown when "自分で書く" is selected) */
+.custom-input {
+  margin-top: 8px;
+  animation: fadeSlideIn 0.25s ease;
+}
+
+.custom-input.hidden {
+  display: none;
+}
+
 /* ---------- Input Hint ---------- */
 .input-hint {
   font-size: 0.72rem;

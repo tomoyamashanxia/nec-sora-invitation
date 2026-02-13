@@ -85,33 +85,84 @@
         <h2 class="section-card__title">プロンプトを書く</h2>
       </div>
 
+      <!-- 場所 -->
       <div class="prompt-section">
-        <label class="prompt-label" for="inputPlace">
+        <div class="prompt-label">
           <span class="prompt-label__emoji">📍</span> 場所
-        </label>
-        <input type="text" class="prompt-input" id="inputPlace" placeholder="日本の田舎の公園">
+        </div>
+        <div class="radio-group" id="groupPlace">
+          <label class="radio-option"><input type="radio" name="place" value="田舎のボロアパート"><span
+              class="radio-option__label">田舎のボロアパート</span></label>
+          <label class="radio-option"><input type="radio" name="place" value="険しい森"><span
+              class="radio-option__label">険しい森</span></label>
+          <label class="radio-option"><input type="radio" name="place" value="会社の男性トイレ"><span
+              class="radio-option__label">会社の男性トイレ</span></label>
+          <label class="radio-option"><input type="radio" name="place" value="無人島の海岸"><span
+              class="radio-option__label">無人島の海岸</span></label>
+          <label class="radio-option"><input type="radio" name="place" value="__custom__"><span
+              class="radio-option__label">自分で書く</span></label>
+        </div>
+        <input type="text" class="prompt-input custom-input hidden" id="customPlace" placeholder="場所を入力...">
       </div>
 
+      <!-- 状態 -->
       <div class="prompt-section">
-        <label class="prompt-label" for="inputState">
+        <div class="prompt-label">
           <span class="prompt-label__emoji">👗</span> 状態
-        </label>
-        <input type="text" class="prompt-input" id="inputState" placeholder="タンクトップとデニム">
+        </div>
+        <div class="radio-group" id="groupState">
+          <label class="radio-option"><input type="radio" name="state" value="タンクトップとデニムショーツ"><span
+              class="radio-option__label">タンクトップとデニムショーツ</span></label>
+          <label class="radio-option"><input type="radio" name="state" value="ベージュのビジネススーツとタンクトップ"><span
+              class="radio-option__label">ベージュのビジネススーツとタンクトップ</span></label>
+          <label class="radio-option"><input type="radio" name="state" value="迷彩柄のUネックTシャツとチノパンツ"><span
+              class="radio-option__label">迷彩柄のUネックTシャツとチノパンツ</span></label>
+          <label class="radio-option"><input type="radio" name="state" value="胸元が開いているエレガントな着物"><span
+              class="radio-option__label">胸元が開いているエレガントな着物</span></label>
+          <label class="radio-option"><input type="radio" name="state" value="__custom__"><span
+              class="radio-option__label">自分で書く</span></label>
+        </div>
+        <input type="text" class="prompt-input custom-input hidden" id="customState" placeholder="状態を入力...">
       </div>
 
+      <!-- 時 -->
       <div class="prompt-section">
-        <label class="prompt-label" for="inputTime">
+        <div class="prompt-label">
           <span class="prompt-label__emoji">🕐</span> 時
-        </label>
-        <input type="text" class="prompt-input" id="inputTime" placeholder="真夏の午後">
+        </div>
+        <div class="radio-group" id="groupTime">
+          <label class="radio-option"><input type="radio" name="time" value="静かな早朝"><span
+              class="radio-option__label">静かな早朝</span></label>
+          <label class="radio-option"><input type="radio" name="time" value="真夏の午後"><span
+              class="radio-option__label">真夏の午後</span></label>
+          <label class="radio-option"><input type="radio" name="time" value="夕暮れ時"><span
+              class="radio-option__label">夕暮れ時</span></label>
+          <label class="radio-option"><input type="radio" name="time" value="深夜"><span
+              class="radio-option__label">深夜</span></label>
+          <label class="radio-option"><input type="radio" name="time" value="__custom__"><span
+              class="radio-option__label">自分で書く</span></label>
+        </div>
+        <input type="text" class="prompt-input custom-input hidden" id="customTime" placeholder="時を入力...">
       </div>
 
+      <!-- 何をしている -->
       <div class="prompt-section">
-        <label class="prompt-label" for="inputAction">
+        <div class="prompt-label">
           <span class="prompt-label__emoji">🎬</span> 何をしている
-        </label>
-        <textarea class="prompt-input" id="inputAction" rows="3"
-          placeholder="ベンチに座ってアイスクリームを食べながら英単語の勉強をしている"></textarea>
+        </div>
+        <div class="radio-group" id="groupAction">
+          <label class="radio-option"><input type="radio" name="action" value="掃除している"><span
+              class="radio-option__label">掃除している</span></label>
+          <label class="radio-option"><input type="radio" name="action" value="散歩している"><span
+              class="radio-option__label">散歩している</span></label>
+          <label class="radio-option"><input type="radio" name="action" value="牛乳を飲んでいる"><span
+              class="radio-option__label">牛乳を飲んでいる</span></label>
+          <label class="radio-option"><input type="radio" name="action" value="髪をとかしている"><span
+              class="radio-option__label">髪をとかしている</span></label>
+          <label class="radio-option"><input type="radio" name="action" value="__custom__"><span
+              class="radio-option__label">自分で書く</span></label>
+        </div>
+        <input type="text" class="prompt-input custom-input hidden" id="customAction" placeholder="何をしているか入力...">
         <p class="input-hint">⚠️ 暴力的・卑猥な表現を含む内容は送信できません</p>
       </div>
     </section>
